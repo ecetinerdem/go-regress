@@ -12,4 +12,7 @@ func main() {
 	logger := log.New(os.Stdout, "", log.LstdFlags)
 
 	logger.Println("Parsed command line flags", config.FeatureVars)
+
+	// Either load or train a model
+
 }

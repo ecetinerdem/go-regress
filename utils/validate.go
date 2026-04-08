@@ -29,7 +29,6 @@ func ValidateData(
 	}
 
 	// Validate all columns for missing and negative data
-
 	for _, colName := range requiredColumns {
 		col := df.Col(colName)
 		for i := range col.Len() {
@@ -64,7 +63,6 @@ func ValidateData(
 		sort.Float64s(sortedValues)
 
 		n := len(sortedValues)
-
 		q1, q3 := sortedValues[n/4], sortedValues[(3*n)/4]
 
 		IQR := q3 - q1
@@ -79,7 +77,7 @@ func ValidateData(
 				outlierCount++
 				// Only log a few to avoid console flooding
 				if outlierCount <= 3 {
-					fmt.Println("   - Removing outlier in '%s' at row '%d': %.2f (outside range %.2f - %.2f)\n", colName, i+1, value, lowerBound, upperBound)
+					fmt.Printf("   - Removing outlier in '%s' at row '%d': %.2f (outside range %.2f - %.2f)\n", colName, i+1, value, lowerBound, upperBound)
 				}
 
 			}
@@ -96,7 +94,7 @@ func ValidateData(
 
 	// Print information about rows if any
 	if outlierCount > 0 {
-		fmt.Printf("Removed %d outlier record (%.1%% of data)\n", outlierCount, 100*float64(outlierCount)/float64(df.Nrow()))
+		fmt.Printf("Removed %d outlier record (%.1f%% of data)\n", outlierCount, 100*float64(outlierCount)/float64(df.Nrow()))
 	}
 
 	// Return filtered data fram if there are rows to drop
