@@ -74,7 +74,7 @@ func printDataSummary(df dataframe.DataFrame, logger *log.Logger, stage string) 
 	logger.Printf("Row Count: %d\n", df.Nrow())
 
 	// Show sample rows
-	if len(df.Names()) > 0 {
+	if df.Nrow() > 0 {
 		// Get the minimum of 3 or the number of columns available
 		numCols := min(df.Ncol(), 3)
 
