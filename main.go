@@ -14,5 +14,10 @@ func main() {
 	logger.Println("Parsed command line flags", config.FeatureVars)
 
 	// Either load or train a model
+	_, _, err := getOrTrainModel(config, logger)
+
+	if err != nil {
+		logger.Fatalf("model error: %v", err)
+	}
 
 }
