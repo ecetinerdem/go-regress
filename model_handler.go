@@ -24,11 +24,20 @@ func getOrTrainModel(config Config, logger *log.Logger) (*model.LinearRegression
 		return nil, nil, fmt.Errorf("Please provide a path to the csv file the --file flag")
 	}
 
+	// Load and prepare training data
 	dataContext, err = loadAndPrepareDate(config, logger)
-
 	if err != nil {
 		return nil, nil, err
 	}
+
+	// Train linear regression model using data
+	logger.Printf("Training model with features: %v\n", config.FeatureVars)
+	dataModel, err = model.TrainLinearRegression(dataContext.Data, config.FeatureVars, config.TargetVariable, config.Normalize)
+	if err != nil {
+		return nil, nil, fmt.Errorf("error training model: %v", err)
+	}
+
+	dataModel.PrintModelSummary()
 
 	return dataModel, &dataContext, nil
 }

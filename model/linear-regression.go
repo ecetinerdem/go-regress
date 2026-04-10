@@ -166,7 +166,7 @@ func (lr *LinearRegression) PrintModelSummary() {
 
 	// Display model fit statistics
 	fmt.Printf("\nModel Performance:\n")
-	fmt.Printf(" - R-squared: %.4f", lr.RSquared)
+	fmt.Printf(" - R-squared: %.4f\n", lr.RSquared)
 	fmt.Printf(" - Interpretation: %.2f%% of variance in %s is explained by this model\n", lr.RSquared*100, lr.Target)
 
 	fmt.Printf("\nCoefficient Interpretation:\n")
