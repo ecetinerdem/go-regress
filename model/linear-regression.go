@@ -150,3 +150,33 @@ func TrainLinearRegression(dataFrame dataframe.DataFrame, featureNames []string,
 	}, nil
 
 }
+
+func (lr *LinearRegression) PrintModelSummary() {
+	fmt.Println("\n==== Model Summary ====\n")
+	fmt.Printf("Regression Equation: %s = %.4f", lr.Target, lr.Intercept)
+
+	for i, feature := range lr.Features {
+		if lr.Coefficients[i] >= 0 {
+			fmt.Printf(" + %.4f x %s", lr.Coefficients[i], feature)
+		} else {
+			fmt.Printf(" - %.4f x %s", -lr.Coefficients[i], feature)
+		}
+	}
+	fmt.Println()
+
+	// Display model fit statistics
+	fmt.Printf("\nModel Performance:\n")
+	fmt.Printf(" - R-squared: %.4f", lr.RSquared)
+	fmt.Printf(" - Interpretation: %.2f%% of variance in %s is explained by this model\n", lr.RSquared*100, lr.Target)
+
+	fmt.Printf("\nCoefficient Interpretation:\n")
+	fmt.Printf("- Intercept (%.4f): The base %s when all features are zero\n", lr.Intercept, lr.Target)
+
+	for i, feature := range lr.Features {
+		fmt.Printf(" - %s Coefficient (%.4f): For each additional unit of %s, %s changes by %.4f units\n", feature, lr.Coefficients[i], feature, lr.Target, lr.Coefficients[i])
+	}
+
+	if lr.IsNormalized {
+		fmt.Printf("\nNote: This model was trained on normalized data. Predictions on new data will automatically be normalized.\n")
+	}
+}
