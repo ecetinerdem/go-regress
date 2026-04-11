@@ -1,0 +1,24 @@
+{
+   "coefficients": [
+      84.50871186082031,
+      78.11521367101344
+   ],
+   "intercept": 486.02410000000003,
+   "features": [
+      "square_footage",
+      "bedrooms"
+   ],
+   "target": "price_thousands",
+   "rsquared": 0.49072385628472115,
+   "feature_means": [
+      1584.2869,
+      3.258
+   ],
+   "feature_std_devs": [
+      472.06858144594736,
+      1.2417874214212536
+   ],
+   "is_normalized": true,
+   "num_samples": 10000,
+   "version": "1.0"
+}

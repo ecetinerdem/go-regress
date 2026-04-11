@@ -15,7 +15,13 @@ func getOrTrainModel(config Config, logger *log.Logger) (*model.LinearRegression
 
 	// Aplication either can load a model or train a new one
 	if config.LoadModelPath != "" {
-		// TODO: Load the model from path
+		// Load the existing model from path as JSON
+		dataModel, err := model.LoadModelFromJSON(config.LoadModelPath)
+		if err != nil {
+			return nil, nil, fmt.Errorf("error loading model: %v", err)
+		}
+
+		return dataModel, &dataContext, nil
 	}
 
 	// Train a new model from a csv file
