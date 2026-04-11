@@ -68,4 +68,34 @@ func handlePrediction(config Config, dataModel *model.LinearRegression) {
 }
 
 func displayPredictionTable(newData [][]float64, predictions []float64, dataModel *model.LinearRegression) {
+	const colWidth = 15
+
+	for i, feature := range dataModel.Features {
+		if i == 0 {
+			fmt.Printf("%-*s", colWidth, feature)
+		} else {
+			fmt.Printf(" | %-*s", colWidth, feature)
+		}
+	}
+
+	fmt.Printf(" | %-*s\n", colWidth, "Predicted Value")
+
+	// Print a seperator line width appropirate length
+	totalWidth := (colWidth+3)*(len(dataModel.Features)+1) + 10
+	fmt.Println(strings.Repeat("-", totalWidth))
+
+	// Print each item with its predicted price
+
+	for i, item := range newData {
+		// Format each feature value
+		fmt.Printf("%-*.2f", colWidth, item[0])
+		for j := 1; j < len(item); j++ {
+			fmt.Printf(" | %-*.2f", colWidth, item[j])
+		}
+
+		// Add the prediction
+		fmt.Printf(" | $%-*.2f", colWidth-1, predictions[i])
+	}
+
+	fmt.Println("\nNote: These predictions based on trained liner regression model.")
 }

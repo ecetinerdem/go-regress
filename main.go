@@ -29,4 +29,7 @@ func main() {
 		}
 	}
 
+	// Handle Predictions
+	handlePrediction(config, dataModel)
+
 }
