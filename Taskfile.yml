@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: "3"
+
+tasks:
+  train:
+    cmds:
+      - go run . -features=square_footage,bedrooms -target=price_thousands -file=house_data.csv
+  save:
+    cmds:
+      - go run . -features=square_footage,bedrooms -target=price_thousands -file=house_data.csv -save=model.json
+  load:
+    cmds:
+      - go run . -features=square_footage,bedrooms -target=price_thousands -load=house_data.csv
+  predict:
+    cmds:
+      - go run . -features=square_footage,bedrooms -target=price_thousands -file=house_data.csv -predict=square_footage=2000,bedrooms=2

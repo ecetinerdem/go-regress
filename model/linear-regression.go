@@ -28,6 +28,38 @@ type LinearRegression struct {
 	Version         string    `json:"version,omitempty"`
 }
 
+func (lr *LinearRegression) Predict(featureValues [][]float64) []float64 {
+	predictions := make([]float64, len(featureValues))
+
+	for dataPointIndex, featureRow := range featureValues {
+		// Start with intercept
+		predictedValue := lr.Intercept
+
+		normalizedFeatures := make([]float64, len(featureRow))
+		copy(normalizedFeatures, featureRow)
+
+		if lr.IsNormalized && len(lr.FeatureMeans) == len(featureRow) {
+			for i := range normalizedFeatures {
+				if lr.FeaturesStdDevs[i] > 0 {
+					normalizedFeatures[i] = (featureRow[i] - lr.FeatureMeans[i]) / lr.FeaturesStdDevs[i]
+				} else {
+					normalizedFeatures[i] = 0
+				}
+			}
+		}
+		// Add contribution of each feature
+		for featureIndex, coefficient := range lr.Coefficients {
+			if lr.IsNormalized {
+				predictedValue += coefficient * normalizedFeatures[featureIndex]
+			} else {
+				predictedValue += coefficient * featureRow[featureIndex]
+			}
+		}
+		predictions[dataPointIndex] = predictedValue
+	}
+	return predictions
+}
+
 func TrainLinearRegression(dataFrame dataframe.DataFrame, featureNames []string, target string, normalize bool) (*LinearRegression, error) {
 	// Check if all feature columns and target column exist
 	columnNames := dataFrame.Names()
