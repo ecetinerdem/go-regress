@@ -7,6 +7,10 @@ import (
 	"github.com/ecetinerdem/go-regress/model"
 )
 
+func init() {
+	_ = os.Mkdir("./visualizations", 0755)
+}
+
 func main() {
 	// Parse command line arguments
 	config := parseCommandLineArgs()
@@ -32,4 +36,6 @@ func main() {
 	// Handle Predictions
 	handlePrediction(config, dataModel)
 
+	// Generate plot if appropriate
+	handlePlot(config, dataModel, dataContext)
 }
